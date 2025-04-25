@@ -6,7 +6,7 @@ import Browse from "./Browse";
 const Body = () => {
   const appRouter = createBrowserRouter([
     {
-      path: "/login",
+      path: "/",
       element: <Login />,
     },
     {

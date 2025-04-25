@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
-
+import { checkvalidationData } from "../utils/Validate.js";
 export const Login = () => {
+  const email = useRef(null);
+  const password = useRef(null);
+  const [Errormessage, setErrormessage] = useState(null);
+
   const [issigin, setsigin] = useState(true);
   const HandleSignUP = () => {
     setsigin(!issigin);
+  };
+
+  const handelButtonClick = () => {
+    console.log(email.current.value);
+    console.log(password.current.value);
+    const validationValue = checkvalidationData(
+      email.current.value,
+      password.current.value
+    );
+    setErrormessage(validationValue);
   };
   return (
     <div className="relative h-screen w-screen bg-black">
@@ -16,7 +30,10 @@ export const Login = () => {
           alt="Background"
         />
       </div>
-      <form className="relative top-40 z-10 bg-black opacity-80 text-white max-w-md mx-auto p-8 rounded-lg flex flex-col space-y-4">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="relative top-40 z-10 bg-black opacity-80 text-white max-w-md mx-auto p-8 rounded-lg flex flex-col space-y-4"
+      >
         <h1 className="text-3xl font-bold mb-4">
           {issigin ? "Sign In" : "Sign Up"}
         </h1>
@@ -30,18 +47,24 @@ export const Login = () => {
           />
         )}
         <input
+          ref={email}
           type="email"
           placeholder="Email Address"
           className="p-3 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white-500"
           required
         />
         <input
+          ref={password}
           type="password"
           placeholder="Password"
           className="p-3 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white-500"
           required
         />
-        <button className="p-3 bg-red-600 rounded text-white font-bold hover:bg-red-700 transition">
+        <p className="text-red-600">{Errormessage}</p>
+        <button
+          className="p-3 bg-red-600 rounded text-white font-bold hover:bg-red-700 transition"
+          onClick={handelButtonClick}
+        >
           {issigin ? "Sign In" : "Sign Up"}
         </button>
         <div className="text-sm text-gray-400 mt-2 flex">

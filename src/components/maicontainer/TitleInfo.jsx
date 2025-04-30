@@ -2,7 +2,7 @@ import React from "react";
 
 const TitleInfo = ({ title, info }) => {
   return (
-    <div className="absolute bottom-24 left-12 text-white max-w-xl z-20 space-y-5">
+    <div className="absolute bottom-70 left-12 text-white max-w-xl z-20 space-y-5">
       <h1 className="text-6xl font-extrabold drop-shadow-lg">{title}</h1>
       <p className="text-lg text-gray-200 drop-shadow-md line-clamp-3">
         {info}

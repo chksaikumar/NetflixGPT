@@ -11,7 +11,7 @@ const MainContainer = () => {
   const mainMovie = Movies[0];
 
   const { original_title, overview, id } = mainMovie;
-  console.log(mainMovie);
+
   return (
     <>
       <TitleInfo title={original_title} info={overview} />

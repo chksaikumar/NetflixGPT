@@ -8,7 +8,7 @@ const VideoContainer = ({ movieId }) => {
   const trailer = useSelector((store) => store.movies?.TrailerVideo);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-screen ">
       {/* YouTube Iframe - Autoplay, No Controls */}
       <iframe
         className="w-full h-full object-cover pointer-events-none"

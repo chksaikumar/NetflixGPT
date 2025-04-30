@@ -10,6 +10,8 @@ import {
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "./Redux/Store/UserSlice.js";
+
+import { PHOTOURL } from "../utils/data.js";
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ export const Login = () => {
           if (user) {
             updateProfile(auth.currentUser, {
               displayName: name.current.value,
-              photoURL: `https://robohash.org/24.197.14.138.png/9`,
+              photoURL: PHOTOURL,
             })
               .then(() => {
                 // After profile updated
@@ -56,7 +58,6 @@ export const Login = () => {
                     photoURL,
                   })
                 );
-                navigate("/browse"); // Only navigate after everything is ready!
               })
               .catch((error) => {
                 console.log(error);

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { auth } from "../utils/firebase"; // adjust path if needed
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { removeUser } from "./Redux/Store/UserSlice";
+import { addUser, removeUser } from "./Redux/Store/UserSlice";
+import { Logo } from "../utils/data";
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -15,13 +16,31 @@ const Header = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
-        navigate("/");
       })
       .catch((error) => {
         console.error(error);
       });
   };
-
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -39,7 +58,7 @@ const Header = () => {
     <div className="absolute top-0 left-0 w-full py-4 px-6 md:px-12 bg-gradient-to-b from-black to-transparent z-10 flex items-center justify-between">
       {/* Netflix Logo */}
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
+        src={Logo}
         alt="Netflix Logo"
         className="h-8 md:h-10 cursor-pointer"
         onClick={() => navigate("/browse")}
@@ -73,7 +92,7 @@ const Header = () => {
             className="relative flex items-center space-x-2"
           >
             <img
-              src={user.photoURL}
+              src={`${user.photoURL}${user.displayName}`}
               alt="Profile"
               className="h-8 w-8 md:h-10 md:w-10 rounded cursor-pointer"
               onClick={() => setShowDropdown((prev) => !prev)}

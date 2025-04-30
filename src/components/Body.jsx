@@ -18,24 +18,7 @@ const Body = () => {
     },
     { path: "/browse", element: <Browse /> },
   ]);
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const { uid, email, displayName, photoURL } = user;
-        dispach(
-          addUser({
-            uid: uid,
-            email: email,
-            displayName: displayName,
-            photoURL: photoURL,
-          })
-        );
-      }
-      // else {
-      // dispach(removeUser());
-      // }
-    });
-  }, []);
+
   return (
     <div>
       <RouterProvider router={appRouter} />

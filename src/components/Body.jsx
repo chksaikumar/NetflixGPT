@@ -7,35 +7,25 @@ import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "./Redux/Store/UserSlice";
 import ErrorPage from "./Error";
+import MoviePage from "./MoviePage";
+import Header from "./Header";
 const Body = () => {
-  const dispach = useDispatch();
-
   const appRouter = createBrowserRouter([
     {
       path: "/",
       element: <Login />,
       errorElement: <ErrorPage />,
     },
-    { path: "/browse", element: <Browse /> },
+    {
+      path: "/browse",
+      element: <Browse />,
+    },
+    {
+      path: "movie",
+      element: <MoviePage />,
+    },
   ]);
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const { uid, email, displayName, photoURL } = user;
-        dispach(
-          addUser({
-            uid: uid,
-            email: email,
-            displayName: displayName,
-            photoURL: photoURL,
-          })
-        );
-      }
-      // else {
-      // dispach(removeUser());
-      // }
-    });
-  }, []);
+
   return (
     <div>
       <RouterProvider router={appRouter} />

@@ -5,7 +5,10 @@ const SecondaryContainer = () => {
   const movies = useSelector((store) => store.movies);
 
   const movieSections = [
-    { title: "Now Playing", movies: movies?.nowPlayingMovies },
+    {
+      title: "Now Playing",
+      movies: movies?.nowPlayingMovies,
+    },
     { title: "Popular", movies: movies?.popularMovies },
     { title: "Upcoming", movies: movies?.upcomingMovies },
     { title: "Top Rated", movies: movies?.TopratedMovies },
@@ -18,7 +21,9 @@ const SecondaryContainer = () => {
         {movieSections.map(
           ({ title, movies }) =>
             movies?.length > 0 && (
-              <MovieList key={title} title={title} movies={movies} />
+              <>
+                <MovieList key={title} title={title} movies={movies} />
+              </>
             )
         )}
       </div>

@@ -1,14 +1,19 @@
 import React, { useEffect } from "react";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+
 import { Login } from "./Login";
 import Browse from "./Browse";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../utils/firebase";
-import { useDispatch } from "react-redux";
-import { addUser, removeUser } from "./Redux/Store/UserSlice";
 import ErrorPage from "./Error";
 import MoviePage from "./MoviePage";
 import Header from "./Header";
+
+const AppLayout = () => (
+  <>
+    <Header />
+    <Outlet />
+  </>
+);
+
 const Body = () => {
   const appRouter = createBrowserRouter([
     {
@@ -17,12 +22,17 @@ const Body = () => {
       errorElement: <ErrorPage />,
     },
     {
-      path: "/browse",
-      element: <Browse />,
-    },
-    {
-      path: "movie",
-      element: <MoviePage />,
+      element: <AppLayout />, // Wraps Header + nested routes
+      children: [
+        {
+          path: "/browse",
+          element: <Browse />,
+        },
+        {
+          path: "/movie/:id", // ✅ Accepts movie ID
+          element: <MoviePage />,
+        },
+      ],
     },
   ]);
 

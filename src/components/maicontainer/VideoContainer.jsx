@@ -11,7 +11,7 @@ const VideoContainer = ({ movieId }) => {
     <div className="relative w-full h-screen ">
       {/* YouTube Iframe - Autoplay, No Controls */}
       <iframe
-        className="w-full h-full object-cover pointer-events-none"
+        className="w-full h-full  object-cover pointer-events-none"
         src={`https://www.youtube.com/embed/${trailer?.key}?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&loop=1&playlist=${trailer?.key}`}
         title="Netflix Trailer"
         allow="autoplay; encrypted-media"
